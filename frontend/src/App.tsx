@@ -1,7 +1,16 @@
-import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
-function App() {
-  return <h1>Hello World!</h1>;
-}
+import Providers from "./contexts";
+import Routes from "./routes";
+
+const App = () => {
+  return (
+    <Providers>
+      <Routes />
+      <ToastContainer autoClose={3000} />
+    </Providers>
+  );
+};
 
 export default App;

@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+from django.core.management.utils import get_random_secret_key
+from datetime import timedelta
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-hv^%a*()-eap0y*4-+pwvorhq)z50x3&+%zux_5@j)=otvq#)&"
+SECRET_KEY = os.getenv("SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,7 +33,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -39,7 +42,20 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "corsheaders",
+]
+
+MY_APPS = [
+    "clients",
+    "contacts",
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
+
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -99,6 +115,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=24),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -121,3 +141,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "clients.Client"
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
