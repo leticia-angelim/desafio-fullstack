@@ -72,7 +72,7 @@ export const ClientProvider = ({ children }: IClientProviderProps) => {
       const { data: clientData } = await api.get("clients/");
 
       setClient(clientData[0]);
-      setContacts(clientData[0].contacts);
+      listContacts();
 
       localStorage.clear();
       localStorage.setItem("@client:token", access);
@@ -86,6 +86,11 @@ export const ClientProvider = ({ children }: IClientProviderProps) => {
     }
   };
 
+  const listContacts = async () => {
+    const { data } = await api.get("contacts/");
+    setContacts(data);
+  };
+
   useEffect(() => {
     const loadClient = async () => {
       const token = localStorage.getItem("@client:token");
@@ -96,9 +101,9 @@ export const ClientProvider = ({ children }: IClientProviderProps) => {
           api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
           const { data } = await api.get(`clients/${id}/`);
-
           setClient(data);
-          setContacts(data.contacts);
+
+          listContacts();
         } catch {
           localStorage.clear();
         }

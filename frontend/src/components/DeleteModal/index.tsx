@@ -36,7 +36,7 @@ const DeleteModal = () => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={(e) => setDeleteModal(false)}
+          onClick={() => setDeleteModal(false)}
         >
           Não
         </Button>

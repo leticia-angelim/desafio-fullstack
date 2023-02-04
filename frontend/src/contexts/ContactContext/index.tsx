@@ -37,7 +37,7 @@ interface IContactContext {
   setDeleteModal: Dispatch<SetStateAction<boolean>>;
   createContact: (data: IContact) => Promise<void>;
   updateContact: (data: IUpdatedContact) => Promise<void>;
-  deleteContact: () => Promise<void>;
+  deleteContact: (e: { preventDefault: () => void }) => Promise<void>;
 }
 
 const ContactContext = createContext<IContactContext>({} as IContactContext);
@@ -66,7 +66,9 @@ export const ContactProvider = ({ children }: IContactProviderProps) => {
     toast.success("Contato atualizado!");
   };
 
-  const deleteContact = async () => {
+  const deleteContact = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+
     await api.delete(`contacts/${contactId}/`);
 
     setDeleteModal(false);

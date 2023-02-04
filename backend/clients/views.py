@@ -13,11 +13,6 @@ class ClientView(generics.ListCreateAPIView):
 
     serializer_class = ClientSerializer
 
-    def perform_create(self, serializer):
-        contacts = Contact.objects.filter(client=self.request.user)
-        serializer.contacts = contacts
-        serializer.save()
-
     def get_queryset(self):
         return Client.objects.filter(id=self.request.user.id)
 

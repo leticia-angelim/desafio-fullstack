@@ -31,7 +31,7 @@ const UpdateModal = ({
 
   const contactData = { name, email, phone };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     updateContact(contactData);
   };
