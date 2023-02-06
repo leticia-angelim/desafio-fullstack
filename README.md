@@ -6,12 +6,12 @@ Uma pequena aplicação de cadastro de clientes com vínculo de contatos, onde �
 
 ## Tecnologias utilizadas
 
-- Python
-- Django
-- Django rest framework
 - Typescript
 - React
-- Node
+- NodeJS
+- Express
+- TypeORM
+- PostgreSQL
 - Material UI
 - toastify
 - react-router-dom
@@ -26,38 +26,22 @@ Uma pequena aplicação de cadastro de clientes com vínculo de contatos, onde �
 cd backend/
 ```
 
-### Crie o ambiente virtual
-
-```
-python -m venv venv
-```
-
-### Ative o ambiente virtual
-
-```bash
-# linux
-source venv/bin/activate
-
-# windows
-.\venv\Scripts\activate
-```
-
 ### Instale as dependências
 
 ```
-pip install -r requirements.txt
+yarn
 ```
 
 ### Execute as migrações
 
 ```
-python manage.py migrate
+yarn typeorm migration:run -d src/data-source.ts
 ```
 
 ### Rode a aplicação
 
 ```
-python manage.py runserver
+yarn dev
 ```
 
 ### Abra um novo terminal e entre na pasta frontend
