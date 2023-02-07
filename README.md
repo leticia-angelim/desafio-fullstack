@@ -32,6 +32,8 @@ cd backend/
 yarn
 ```
 
+### Faça uma cópia do arquivo .env.example e coloque os dados do seu database
+
 ### Execute as migrações
 
 ```

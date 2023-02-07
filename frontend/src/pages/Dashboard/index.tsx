@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import EditMenu from "../../components/Menu";
 import AddModal from "../../components/AddModal";
+import EditClient from "../../components/EditClient";
 import UpdateModal from "../../components/UpdateModal";
 import DeleteModal from "../../components/DeleteModal";
+import DeleteClient from "../../components/DeleteClient";
 import ContainerMotion from "../../components/Animation";
 
 import { useClientContext } from "../../contexts/ClientContext";
@@ -50,7 +53,12 @@ const Dashboard = () => {
     <ContainerMotion>
       <AppBar color="primary">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <EditMenu />
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, marginLeft: "1rem" }}
+          >
             Olá, {clientName}!
           </Typography>
           <Button onClick={handleClick} color="inherit">
@@ -130,6 +138,8 @@ const Dashboard = () => {
           setPhone={setPhone}
         />
         <DeleteModal />
+        <EditClient />
+        <DeleteClient />
       </Container>
     </ContainerMotion>
   );
