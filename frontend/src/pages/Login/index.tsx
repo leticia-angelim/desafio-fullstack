@@ -40,7 +40,7 @@ const Login = () => {
             Kenzie Contacts
           </Typography>
           <Button
-            onClick={() => navigate("register/", { replace: true })}
+            onClick={() => navigate("/register", { replace: true })}
             color="inherit"
           >
             Cadastre-se
@@ -68,13 +68,11 @@ const Login = () => {
                 <Grid xs={12} item>
                   <TextField
                     type={"text"}
-                    label="Username *"
-                    {...register("username")}
+                    label="Email *"
+                    {...register("email")}
                     fullWidth
                   />
-                  <FormHelperText error>
-                    {errors.username?.message}
-                  </FormHelperText>
+                  <FormHelperText error>{errors.email?.message}</FormHelperText>
                 </Grid>
                 <Grid xs={12} item>
                   <TextField

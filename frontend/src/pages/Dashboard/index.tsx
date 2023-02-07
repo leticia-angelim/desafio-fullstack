@@ -28,7 +28,9 @@ import {
 } from "@mui/material";
 
 const Dashboard = () => {
-  const { client, setClient, contacts } = useClientContext();
+  const clientName = localStorage.getItem("@client:name");
+
+  const { setClient, contacts } = useClientContext();
   const { setAddModal, setUpdateModal, setDeleteModal, setContactId } =
     useContactContext();
 
@@ -41,7 +43,7 @@ const Dashboard = () => {
   const handleClick = () => {
     localStorage.clear();
     setClient(null);
-    navigate("/", { replace: true });
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -49,7 +51,7 @@ const Dashboard = () => {
       <AppBar color="primary">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Olá, {client?.name}
+            Olá, {clientName}!
           </Typography>
           <Button onClick={handleClick} color="inherit">
             Sair
@@ -103,7 +105,13 @@ const Dashboard = () => {
                     >
                       <EditOutlinedIcon fontSize="small" />
                     </Button>
-                    <Button color="error" onClick={() => setDeleteModal(true)}>
+                    <Button
+                      color="error"
+                      onClick={() => {
+                        setContactId(contact.id);
+                        setDeleteModal(true);
+                      }}
+                    >
                       <CloseIcon fontSize="small" />
                     </Button>
                   </TableCell>

@@ -20,11 +20,11 @@ import { IContact } from "../ContactContext";
 export interface IClient {
   id: string;
   name: string;
-  username: string;
   email: string;
   password: string;
   phone: string;
   date_joined: string;
+  contacts?: IContact[];
 }
 
 interface IClientProviderProps {
@@ -55,9 +55,9 @@ export const ClientProvider = ({ children }: IClientProviderProps) => {
 
       toast.success("Conta criada com sucesso!");
 
-      navigate("", { replace: true });
+      navigate("/login", { replace: true });
     } catch {
-      toast.error("Ops! Username já cadastrado");
+      toast.error("Ops! Email já cadastrado");
     }
   };
 
@@ -65,43 +65,41 @@ export const ClientProvider = ({ children }: IClientProviderProps) => {
     try {
       const response = await loginRequest(data);
 
-      const { access } = response;
+      const { token, client: clientData } = response;
 
-      api.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      const { data: clientData } = await api.get("clients/");
-
-      setClient(clientData[0]);
-      listContacts();
+      setClient(clientData);
+      setContacts(clientData.contacts);
 
       localStorage.clear();
-      localStorage.setItem("@client:token", access);
-      localStorage.setItem("@client:clientId", clientData[0].id);
+      localStorage.setItem("@client:token", token);
+      localStorage.setItem("@client:name", clientData.name);
 
       toast.success("Login efetuado com sucesso!");
 
-      navigate("dashboard/", { replace: true });
+      navigate("/dashboard", { replace: true });
     } catch {
-      toast.error("Ops! Username e/ou senha incorretos");
+      toast.error("Ops! Email e/ou senha incorretos");
     }
   };
 
   const listContacts = async () => {
-    const { data } = await api.get("contacts/");
-    setContacts(data);
+    try {
+      const { data } = await api.get<IContact[]>("/contacts");
+      setContacts(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
     const loadClient = async () => {
       const token = localStorage.getItem("@client:token");
-      const id = localStorage.getItem("@client:clientId");
 
       if (token) {
         try {
           api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-          const { data } = await api.get(`clients/${id}/`);
-          setClient(data);
 
           listContacts();
         } catch {

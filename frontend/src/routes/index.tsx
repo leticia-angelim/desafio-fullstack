@@ -8,11 +8,11 @@ import Dashboard from "../pages/Dashboard";
 const MyRoutes = () => {
   return (
     <Routes>
-      <Route path="*" element={<Navigate replace to={""} />} />
-      <Route path="" element={<Login />} />
-      <Route path="register/" element={<Register />} />
+      <Route path="*" element={<Navigate replace to={"/login"} />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route element={<ProtectedRoutes />}>
-        <Route path="dashboard/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Route>
     </Routes>
   );

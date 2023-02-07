@@ -50,7 +50,7 @@ export const ContactProvider = ({ children }: IContactProviderProps) => {
 
   const createContact = async (data: IContact) => {
     try {
-      await api.post("contacts/", data);
+      await api.post("/contacts", data);
 
       setAddModal(false);
       toast.success("Contato adicionado!");
@@ -60,16 +60,14 @@ export const ContactProvider = ({ children }: IContactProviderProps) => {
   };
 
   const updateContact = async (data: IUpdatedContact) => {
-    await api.patch(`contacts/${contactId}/`, data);
+    await api.patch(`/contacts/${contactId}`, data);
 
     setUpdateModal(false);
     toast.success("Contato atualizado!");
   };
 
-  const deleteContact = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-
-    await api.delete(`contacts/${contactId}/`);
+  const deleteContact = async () => {
+    await api.delete(`/contacts/${contactId}`);
 
     setDeleteModal(false);
     toast.success("Contato excluído!");
