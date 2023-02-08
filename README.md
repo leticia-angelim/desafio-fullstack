@@ -75,4 +75,4 @@ yarn start
 yarn run cypress open
 ```
 
-### Quando o Cypress abrir, clique em E2E Testing, selecione um navegador, e rode o spec desejado
+#### Quando o Cypress abrir, clique em E2E Testing, selecione um navegador, e rode o spec desejado
