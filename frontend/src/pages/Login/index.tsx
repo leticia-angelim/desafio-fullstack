@@ -67,6 +67,7 @@ const Login = () => {
               <Grid container spacing={3}>
                 <Grid xs={12} item>
                   <TextField
+                    id="email"
                     type={"text"}
                     label="Email *"
                     {...register("email")}
@@ -76,6 +77,7 @@ const Login = () => {
                 </Grid>
                 <Grid xs={12} item>
                   <TextField
+                    id="password"
                     type={"password"}
                     label="Senha *"
                     {...register("password")}

@@ -7,7 +7,7 @@ const createSessionController = async (req: Request, res: Response) => {
   const data: IClientLogin = req.body;
   const token = await createSessionService(data);
 
-  return res.status(200).json(instanceToPlain(token));
+  return res.status(200).json(instanceToPlain({ token }));
 };
 
 export default createSessionController;

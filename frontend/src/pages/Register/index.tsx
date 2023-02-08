@@ -68,6 +68,7 @@ const Register = () => {
               <Grid container spacing={2}>
                 <Grid xs={12} item>
                   <TextField
+                    id="name"
                     type={"text"}
                     label="Nome Completo *"
                     {...register("name")}
@@ -77,7 +78,8 @@ const Register = () => {
                 </Grid>
                 <Grid xs={12} item>
                   <TextField
-                    type={"email"}
+                    id="email"
+                    type={"text"}
                     label="Email *"
                     {...register("email")}
                     fullWidth
@@ -86,6 +88,7 @@ const Register = () => {
                 </Grid>
                 <Grid xs={12} item>
                   <TextField
+                    id="password"
                     type={"password"}
                     label="Senha *"
                     {...register("password")}
@@ -97,6 +100,7 @@ const Register = () => {
                 </Grid>
                 <Grid xs={12} item>
                   <TextField
+                    id="phone"
                     type={"tel"}
                     label="Telefone *"
                     placeholder="(00) 0000-0000"

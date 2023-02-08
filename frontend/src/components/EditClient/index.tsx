@@ -49,6 +49,7 @@ const EditClient = () => {
           <Grid container spacing={2}>
             <Grid xs={12} item>
               <TextField
+                id="name"
                 type={"text"}
                 label="Nome Completo *"
                 defaultValue={client?.name}
@@ -59,6 +60,7 @@ const EditClient = () => {
             </Grid>
             <Grid xs={12} item>
               <TextField
+                id="email"
                 type={"email"}
                 label="Email *"
                 defaultValue={client?.email}
@@ -69,6 +71,7 @@ const EditClient = () => {
             </Grid>
             <Grid xs={12} item>
               <TextField
+                id="password"
                 type={"password"}
                 label="Senha *"
                 {...register("password")}
@@ -78,6 +81,7 @@ const EditClient = () => {
             </Grid>
             <Grid xs={12} item>
               <TextField
+                id="phone"
                 type={"tel"}
                 label="Telefone *"
                 defaultValue={client?.phone}

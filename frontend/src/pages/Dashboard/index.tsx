@@ -13,8 +13,8 @@ import { useClientContext } from "../../contexts/ClientContext";
 import { useContactContext } from "../../contexts/ContactContext";
 
 import AddIcon from "@material-ui/icons/Add";
-import CloseIcon from "@material-ui/icons/Close";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {
   AppBar,
   Box,
@@ -81,52 +81,64 @@ const Dashboard = () => {
             color="secondary"
             onClick={() => setAddModal(true)}
           >
+            <AddIcon sx={{ marginRight: "0.5rem" }} />
             Novo Contato
-            <AddIcon />
           </Button>
         </Box>
         <Paper elevation={12}>
-          <Table>
-            <TableHead sx={{ backgroundColor: "#2f4670" }}>
-              <TableRow>
-                <TableCell sx={{ color: "white" }}>Nome</TableCell>
-                <TableCell sx={{ color: "white" }}>Email</TableCell>
-                <TableCell sx={{ color: "white" }}>Telefone</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {contacts?.map((contact) => (
-                <TableRow key={contact.id}>
-                  <TableCell>{contact.name}</TableCell>
-                  <TableCell>{contact.email}</TableCell>
-                  <TableCell>{contact.phone}</TableCell>
-                  <TableCell>
-                    <Button
-                      onClick={() => {
-                        setContactId(contact.id);
-                        setName(contact.name);
-                        setEmail(contact.email);
-                        setPhone(contact.phone);
-                        setUpdateModal(true);
-                      }}
-                    >
-                      <EditOutlinedIcon fontSize="small" />
-                    </Button>
-                    <Button
-                      color="error"
-                      onClick={() => {
-                        setContactId(contact.id);
-                        setDeleteModal(true);
-                      }}
-                    >
-                      <CloseIcon fontSize="small" />
-                    </Button>
+          {contacts!.length > 0 ? (
+            <Table>
+              <TableHead sx={{ backgroundColor: "#2f4670" }}>
+                <TableRow>
+                  <TableCell sx={{ color: "white" }}>Nome</TableCell>
+                  <TableCell sx={{ color: "white" }}>Email</TableCell>
+                  <TableCell sx={{ color: "white" }}>Telefone</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {contacts?.map((contact) => (
+                  <TableRow key={contact.id}>
+                    <TableCell>{contact.name}</TableCell>
+                    <TableCell>{contact.email}</TableCell>
+                    <TableCell>{contact.phone}</TableCell>
+                    <TableCell>
+                      <Button
+                        onClick={() => {
+                          setContactId(contact.id);
+                          setName(contact.name);
+                          setEmail(contact.email);
+                          setPhone(contact.phone);
+                          setUpdateModal(true);
+                        }}
+                      >
+                        <EditOutlinedIcon id="edit" fontSize="small" />
+                      </Button>
+                      <Button
+                        color="error"
+                        onClick={() => {
+                          setContactId(contact.id);
+                          setDeleteModal(true);
+                        }}
+                      >
+                        <DeleteOutlineIcon id="delete" fontSize="small" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <Table>
+              <TableHead sx={{ backgroundColor: "#2f4670" }}>
+                <TableRow>
+                  <TableCell sx={{ color: "white", textAlign: "center" }}>
+                    Você não possui nenhum contato cadastrado
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+            </Table>
+          )}
         </Paper>
         <AddModal />
         <UpdateModal

@@ -57,6 +57,7 @@ const UpdateModal = ({
           <Grid container spacing={2}>
             <Grid xs={12} item>
               <TextField
+                id="name"
                 type={"text"}
                 label="Nome Completo"
                 value={name}

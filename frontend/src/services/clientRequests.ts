@@ -3,7 +3,6 @@ import api from "./api";
 
 interface ILoginResponse {
   token: string;
-  client: IClient;
 }
 
 export const registerClientRequest = async (

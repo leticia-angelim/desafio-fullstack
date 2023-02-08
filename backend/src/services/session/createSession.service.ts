@@ -1,7 +1,4 @@
-import {
-  IClientLogin,
-  IClientLoginToken,
-} from "../../interfaces/client.interface";
+import { IClientLogin } from "../../interfaces/client.interface";
 import { Client } from "../../entities/client.entity";
 import { AppError } from "../../errors/appError";
 import AppDataSource from "../../data-source";
@@ -10,9 +7,7 @@ import { compare } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-const createSessionService = async (
-  data: IClientLogin
-): Promise<IClientLoginToken> => {
+const createSessionService = async (data: IClientLogin): Promise<string> => {
   const { email, password } = data;
   const clientRepository = AppDataSource.getRepository(Client);
   const client = await clientRepository.findOneBy({
@@ -40,7 +35,7 @@ const createSessionService = async (
     }
   );
 
-  return { token, client };
+  return token;
 };
 
 export default createSessionService;

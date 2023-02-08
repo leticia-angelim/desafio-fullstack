@@ -41,7 +41,8 @@ interface IClientProviderProps {
 interface IClientContext {
   client: IClient | null;
   setClient: Dispatch<SetStateAction<IClient | null>>;
-  contacts?: IContact[];
+  contacts: IContact[] | undefined;
+  setContacts: Dispatch<SetStateAction<IContact[] | undefined>>;
   loading: boolean;
   editClientModal: boolean;
   setEditClientModal: Dispatch<SetStateAction<boolean>>;
@@ -78,19 +79,14 @@ export const ClientProvider = ({ children }: IClientProviderProps) => {
 
   const loginClient = async (data: IClient) => {
     try {
-      const response = await loginRequest(data);
-
-      const { token, client: clientData } = response;
+      const { token } = await loginRequest(data);
 
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      setClient(clientData);
-      setContacts(clientData.contacts);
+      getProfile();
 
       localStorage.clear();
       localStorage.setItem("@client:token", token);
-      localStorage.setItem("@client:id", clientData.id);
-      localStorage.setItem("@client:name", clientData.name);
 
       toast.success("Login efetuado com sucesso!");
 
@@ -98,6 +94,15 @@ export const ClientProvider = ({ children }: IClientProviderProps) => {
     } catch {
       toast.error("Ops! Email e/ou senha incorretos");
     }
+  };
+
+  const getProfile = async () => {
+    const { data } = await api.get<IClient>("/clients/profile");
+    setClient(data);
+    setContacts(data.contacts);
+
+    localStorage.setItem("@client:id", data.id);
+    localStorage.setItem("@client:name", data.name);
   };
 
   const updateClient = async (data: IUpdatedClient) => {
@@ -130,11 +135,6 @@ export const ClientProvider = ({ children }: IClientProviderProps) => {
     navigate("/login", { replace: true });
   };
 
-  const listContacts = async () => {
-    const { data } = await api.get<IContact[]>("/contacts");
-    setContacts(data);
-  };
-
   useEffect(() => {
     const loadClient = async () => {
       const token = localStorage.getItem("@client:token");
@@ -143,7 +143,7 @@ export const ClientProvider = ({ children }: IClientProviderProps) => {
         try {
           api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-          listContacts();
+          getProfile();
         } catch {
           localStorage.clear();
         }
@@ -152,7 +152,7 @@ export const ClientProvider = ({ children }: IClientProviderProps) => {
     };
 
     loadClient();
-  }, [contacts]);
+  }, []);
 
   return (
     <ClientContext.Provider
@@ -160,6 +160,7 @@ export const ClientProvider = ({ children }: IClientProviderProps) => {
         client,
         setClient,
         contacts,
+        setContacts,
         loading,
         registerClient,
         loginClient,

@@ -48,6 +48,7 @@ const AddModal = () => {
           <Grid container spacing={2}>
             <Grid xs={12} item>
               <TextField
+                id="name"
                 type={"text"}
                 label="Nome Completo *"
                 {...register("name")}
@@ -57,6 +58,7 @@ const AddModal = () => {
             </Grid>
             <Grid xs={12} item>
               <TextField
+                id="email"
                 type={"email"}
                 label="Email *"
                 {...register("email")}
@@ -66,6 +68,7 @@ const AddModal = () => {
             </Grid>
             <Grid xs={12} item>
               <TextField
+                id="phone"
                 type={"tel"}
                 label="Telefone *"
                 placeholder="(00) 0000-0000"
@@ -81,7 +84,7 @@ const AddModal = () => {
                 color="secondary"
                 fullWidth
               >
-                Adicionar
+                ADICIONAR
               </Button>
             </Grid>
           </Grid>

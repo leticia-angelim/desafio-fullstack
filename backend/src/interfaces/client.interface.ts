@@ -23,11 +23,6 @@ export interface IClientLogin {
   password: string;
 }
 
-export interface IClientLoginToken {
-  token: string;
-  client: IClient;
-}
-
 export interface IClientUpdate {
   name?: string;
   email?: string;

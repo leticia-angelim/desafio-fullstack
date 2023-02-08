@@ -15,6 +15,7 @@ Uma pequena aplicação de cadastro de clientes com vínculo de contatos, onde �
 - Material UI
 - toastify
 - react-router-dom
+- Cypress
 
 <br/>
 
@@ -63,3 +64,15 @@ yarn
 ```
 yarn start
 ```
+
+<br/>
+
+## Testes
+
+### Abra um novo terminal, entre na pasta frontend e rode os testes
+
+```
+yarn run cypress open
+```
+
+### Quando o Cypress abrir, clique em E2E Testing, selecione um navegador, e rode o spec desejado

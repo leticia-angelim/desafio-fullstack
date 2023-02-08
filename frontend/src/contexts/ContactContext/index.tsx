@@ -8,6 +8,7 @@ import {
 } from "react";
 import { toast } from "react-toastify";
 import api from "../../services/api";
+import { useClientContext } from "../ClientContext";
 
 export interface IContact {
   id: string;
@@ -48,9 +49,13 @@ export const ContactProvider = ({ children }: IContactProviderProps) => {
   const [updateModal, setUpdateModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { contacts, setContacts } = useClientContext();
+
   const createContact = async (data: IContact) => {
     try {
-      await api.post("/contacts", data);
+      const { data: contactData } = await api.post("/contacts", data);
+
+      setContacts([...contacts!, contactData]);
 
       setAddModal(false);
       toast.success("Contato adicionado!");
@@ -60,7 +65,15 @@ export const ContactProvider = ({ children }: IContactProviderProps) => {
   };
 
   const updateContact = async (data: IUpdatedContact) => {
-    await api.patch(`/contacts/${contactId}`, data);
+    const { data: contactData } = await api.patch(
+      `/contacts/${contactId}`,
+      data
+    );
+
+    const findContact = contacts?.find((contact) => contact.id === contactId);
+    const contactIndex = contacts?.indexOf(findContact!);
+
+    contacts?.splice(contactIndex!, 1, contactData);
 
     setUpdateModal(false);
     toast.success("Contato atualizado!");
@@ -68,6 +81,11 @@ export const ContactProvider = ({ children }: IContactProviderProps) => {
 
   const deleteContact = async () => {
     await api.delete(`/contacts/${contactId}`);
+
+    const findContact = contacts?.find((contact) => contact.id === contactId);
+    const contactIndex = contacts?.indexOf(findContact!);
+
+    contacts?.splice(contactIndex!, 1);
 
     setDeleteModal(false);
     toast.success("Contato excluído!");
